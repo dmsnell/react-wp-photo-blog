@@ -22,7 +22,7 @@ export default ( { site, post } ) => (
 			<h1 className="title">{ post.title }</h1>
 			<span>{ moment( post.date ).format( 'LL') }</span>
 		</div>
-		<img className="featured-image" src={ post.featured_image } />
+		<img className="featured-image" src={ post.featured_image.URL } />
 		<div className="description" dangerouslySetInnerHTML={ { __html: post.content } } />
 		<div className="meta-block">
 			<span>
