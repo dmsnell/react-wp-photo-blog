@@ -28,11 +28,10 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin( {
 			inject: true,
-			//templateContent:
-			//'<html><head>' +
-			//'<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>' +
-			//'</head><body><div id="root"/></body></html>'
-			template: './index.html'
+			templateContent:
+			'<html><head>' +
+			'<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>' +
+			'</head><body><div id="root"/></body></html>'
 		} ),
 		new webpack.ProvidePlugin( {
 			'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'

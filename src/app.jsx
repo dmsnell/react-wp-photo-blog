@@ -17,7 +17,7 @@ store.dispatch( setSite( config.site ) );
 const App = ({children}) => <div>{ children }</div>;
 const wrapped = Type => props => <Provider { ...{ store } }><Type { ...props } /></Provider>;
 
-const render = () => ReactDOM.render( (
+ReactDOM.render( (
 	<Router>
 		<Route path="/" component={ App }>
 			<IndexRoute component={ wrapped( PostList ) } />
@@ -26,11 +26,3 @@ const render = () => ReactDOM.render( (
 		</Route>
 	</Router>
 ), document.getElementById( 'root' ) );
-
-const schedule = () => requestAnimationFrame( () => {
-	if ( ! store.getState().posts.length ) {
-		return schedule();
-	}
-
-	render();
-} );
