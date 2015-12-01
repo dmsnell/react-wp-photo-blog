@@ -9,8 +9,13 @@
 		list-style: 'none';
 		padding: 0;
 
-		li {
+		& li {
 			position: relative;
+			opacity: 0.6;
+
+			&:hover {
+				opacity: 1;
+			}
 		}
 	}
 

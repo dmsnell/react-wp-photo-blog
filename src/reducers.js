@@ -34,7 +34,6 @@ export const fetchPosts = dispatch => {
 	fetch( `https://public-api.wordpress.com/rest/v1.1/sites/${ config.site }/posts/` )
 		.then( response => response.json() )
 		.then( data => data.posts )
-		.then( posts => posts.map( post => { console.log( post ); return post; } ) )
 		.then( posts => posts.map( post => ( {
 			...post,
 			featured_image: post.attachments[ Object.keys( post.attachments ).slice(-1) ].URL
