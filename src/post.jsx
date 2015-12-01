@@ -60,7 +60,7 @@ export default ( { site, post } ) => (
 		<img className="featured-image" src={ post.featured_image.URL } />
 		<div className="description" dangerouslySetInnerHTML={ { __html: post.content } } />
 		<div className="exif-data">
-			{ Object.keys( post.featured_image.exif )
+			{ post.featured_image.exif && Object.keys( post.featured_image.exif )
 				.map( k => [ k, post.featured_image.exif[ k ] ] )
 				.filter( ( [ _, v ] ) => v && ( ! Array.isArray( v ) || v.length ) )
 				.filter( selectExifTags )

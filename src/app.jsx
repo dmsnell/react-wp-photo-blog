@@ -23,7 +23,7 @@ const App = React.createClass( {
 	},
 
 	refreshStore() {
-		const { site } = this.props.params;
+		const { site = config.site } = this.props.params;
 
 		store.dispatch( setSite( site ) );
 		store.dispatch( fetchPosts( site ) );
