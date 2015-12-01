@@ -11,6 +11,9 @@ function posts( state = [], action ) {
 		case ADD_POST:
 			return state.concat( action.post );
 
+		case SET_SITE:
+			return [];
+
 		default:
 			return state
 	}
@@ -20,6 +23,7 @@ function site( state = '', action ) {
 	switch ( action.type ) {
 		case SET_SITE:
 			return action.site;
+
 		default:
 			return state;
 	}
@@ -30,7 +34,7 @@ export const addPost = post => ( {
 	post: { ...post, title: decode( post.title ) }
 } );
 
-export const fetchPosts = dispatch => {
+export const fetchPosts = site => ( dispatch )=> {
 	const fields = [
 		'ID',
 		'attachments',
@@ -41,7 +45,7 @@ export const fetchPosts = dispatch => {
 		'categories'
 	].join( ',' );
 
-	fetch( `https://public-api.wordpress.com/rest/v1.1/sites/${ config.site }/posts/?fields=${ fields }&order=DESC` )
+	fetch( `https://public-api.wordpress.com/rest/v1.1/sites/${ site }/posts/?fields=${ fields }&order=DESC` )
 		.then( response => response.json() )
 		.then( data => data.posts )
 		.then( posts => posts.map( post => ( { ...post, featured_image: post.attachments[ Object.keys( post.attachments ).slice( -1 ) ] } ) ) )

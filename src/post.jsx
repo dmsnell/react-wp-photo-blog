@@ -5,15 +5,15 @@ import moment from 'moment';
 
 require( 'post.scss' );
 
-const renderCategory = ( { ID, name } ) => (
+const renderCategory = site => ( { ID, name } ) => (
 	<span className="category" key={ ID }>
-		<Link to={ `/categories/${ ID }` }>{ name }</Link>
+		<Link to={ `/${ site }/categories/${ ID }` }>{ name }</Link>
 	</span>
 );
 
-const renderTag = ( { ID, name } ) => (
+const renderTag = site => ( { ID, name } ) => (
 	<span className="tag" key={ ID }>
-		<Link to={ `/tags/${ ID }` }>{ name }</Link>
+		<Link to={ `/${ site }/tags/${ ID }` }>{ name }</Link>
 	</span>
 );
 
@@ -74,14 +74,14 @@ export default ( { site, post } ) => (
 				{ Object
 					.keys( post.categories )
 					.map( k => post.categories[ k ] )
-					.map( renderCategory ) }
+					.map( renderCategory( site ) ) }
 			</span>
 			<span>
 				{ Object
 					.keys( post.tags )
 					.slice( 0, 3 )
 					.map( k => post.tags[ k ] )
-					.map( renderTag ) }
+					.map( renderTag( site ) ) }
 			</span>
 		</div>
 	</div>

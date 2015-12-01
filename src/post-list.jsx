@@ -6,7 +6,7 @@ import Post from 'post';
 
 require( 'post-list.scss' );
 
-const PostList = ( { posts, params: { selectedTag = 0, selectedCategory = 0 }, site } ) => (
+const PostList = ( { posts, params: { selectedTag = 0, selectedCategory = 0, site } } ) => (
 	<div className="post-list">
 		{ posts
 			.filter( post => ! selectedCategory || Object

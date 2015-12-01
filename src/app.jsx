@@ -11,15 +11,34 @@ import PostList from 'post-list';
 
 require( 'app.scss' );
 
-store.dispatch( fetchPosts );
-store.dispatch( setSite( config.site ) );
+const App = React.createClass( {
+	componentDidMount() {
+		this.refreshStore();
+	},
 
-const App = ({children}) => <div>{ children }</div>;
+	componentDidUpdate( oldProps ) {
+		if ( oldProps.params.site !== this.props.params.site ) {
+			this.refreshStore();
+		}
+	},
+
+	refreshStore() {
+		const { site } = this.props.params;
+
+		store.dispatch( setSite( site ) );
+		store.dispatch( fetchPosts( site ) );
+	},
+
+	render() {
+		return <div>{ this.props.children }</div>;
+	}
+} );
+
 const wrapped = Type => props => <Provider { ...{ store } }><Type { ...props } /></Provider>;
 
 ReactDOM.render( (
 	<Router>
-		<Route path="/" component={ App }>
+		<Route path="/(:site)" component={ App }>
 			<IndexRoute component={ wrapped( PostList ) } />
 			<Route path="categories/:selectedCategory" component={ wrapped( PostList ) } />
 			<Route path="tags/:selectedTag" component={ wrapped( PostList ) } />
