@@ -51,6 +51,20 @@
 		object-fit: contain;
 	}
 
+	& .exif-data {
+		position: relative;
+		width: 60%;
+		margin: auto;
+		column-count: 2;
+		column-width: 200px;
+		text-align: left;
+		font-size: 80%;
+
+		& div {
+			transform: translate( 25%, 0 );
+		}
+	}
+
 	& .description {
 		width: 75%;
 		margin: auto;

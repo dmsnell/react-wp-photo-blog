@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/dmsnell/react-wp-photo-blog#readme",
   "devDependencies": {
+    "autoprefixer-loader": "3.1.0",
     "babel-core": "6.2.1",
     "babel-loader": "6.2.0",
     "babel-plugin-transform-object-rest-spread": "6.1.18",
@@ -43,6 +44,7 @@
   },
   "dependencies": {
     "ent": "2.2.0",
+    "frac": "1.0.2",
     "history": "1.13.1",
     "moment": "2.10.6",
     "react": "0.14.3",

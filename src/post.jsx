@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import frac from 'frac';
 import moment from 'moment';
 
 require( 'post.scss' );
@@ -16,6 +17,40 @@ const renderTag = ( { ID, name } ) => (
 	</span>
 );
 
+const wantedExifTags = {
+	camera: 1,
+	shutter_speed: 2,
+	aperture: 3,
+	iso: 4,
+	focal_length: 5
+};
+const selectExifTags = ( [ k, _ ] ) => !! wantedExifTags[ k ];
+const sortExifTags = ( [ a, ], [ b, ] ) => wantedExifTags[ a ] - wantedExifTags[ b ];
+
+const mapExifData = ( [ k, v ] ) => {
+	let r;
+
+	switch ( k ) {
+		case 'aperture':
+			r = `f/${ v }`
+			break;
+
+		case 'created_timestamp':
+			r = moment( parseInt( v, 10 ) * 1000 ).format( 'LL' );
+			break;
+
+		case 'shutter_speed':
+			r = frac( parseFloat( v ), 8000 );
+			r = `${ r[0] ? r[0] : `${ r[1] }/${ r[2] }` }s`;
+			break;
+
+		default:
+			r = v;
+	}
+
+	return [ k, r ];
+};
+
 export default ( { site, post } ) => (
 	<div className="post">
 		<div className="meta-block">
@@ -24,6 +59,16 @@ export default ( { site, post } ) => (
 		</div>
 		<img className="featured-image" src={ post.featured_image.URL } />
 		<div className="description" dangerouslySetInnerHTML={ { __html: post.content } } />
+		<div className="exif-data">
+			{ Object.keys( post.featured_image.exif )
+				.map( k => [ k, post.featured_image.exif[ k ] ] )
+				.filter( ( [ _, v ] ) => v && ( ! Array.isArray( v ) || v.length ) )
+				.filter( selectExifTags )
+				.map( mapExifData )
+				.slice()
+				.sort( sortExifTags )
+				.map( ( [ k, v ], i ) => <div key={ i }><strong>{ k }</strong>: { v }</div> ) }
+		</div>
 		<div className="meta-block">
 			<span>
 				{ Object
