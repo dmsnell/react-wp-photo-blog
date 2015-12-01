@@ -1,23 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { connect } from 'react-redux';
+import moment from 'moment';
 
 require( 'post.scss' );
 
-const Post = ( { site, posts, params: { postId } } ) => {
-	const post = posts
-		.filter( p => p.featured_image )
-		.find( p => p.ID === parseInt( postId, 10 ) );
+const renderCategory = ( { ID, name } ) => (
+	<span className="category" key={ ID }>
+		<Link to={ `/categories/${ ID }` }>{ name }</Link>
+	</span>
+);
 
-	if ( ! post ) { return <div /> }
+const renderTag = ( { ID, name } ) => (
+	<span className="tag" key={ ID }>
+		<Link to={ `/tags/${ ID }` }>{ name }</Link>
+	</span>
+);
 
-	return (
-		<div className="post">
-			<h1>{ post.title }</h1>
-			<div dangerouslySetInnerHTML={ { __html: post.content } } />
-			<a href={ post.URL } target="_blank">{ `See it on ${ site }` }</a>
+export default ( { site, post } ) => (
+	<div className="post">
+		<div className="meta-block">
+			<h1 className="title">{ post.title }</h1>
+			<span>{ moment( post.date ).format( 'LL') }</span>
 		</div>
-	);
-};
-
-export default connect( state => state )( Post );
+		<img className="featured-image" src={ post.featured_image } />
+		<div className="description" dangerouslySetInnerHTML={ { __html: post.content } } />
+		<div className="meta-block">
+			<span>
+				{ Object
+					.keys( post.categories )
+					.map( k => post.categories[ k ] )
+					.map( renderCategory ) }
+			</span>
+			<span>
+				{ Object
+					.keys( post.tags )
+					.slice( 0, 3 )
+					.map( k => post.tags[ k ] )
+					.map( renderTag ) }
+			</span>
+		</div>
+	</div>
+);

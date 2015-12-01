@@ -8,7 +8,6 @@ import { fetchPosts, setSite } from 'reducers';
 import store from 'store';
 
 import PostList from 'post-list';
-import Post from 'post';
 
 require( 'app.scss' );
 
@@ -22,7 +21,8 @@ ReactDOM.render( (
 	<Router>
 		<Route path="/" component={ App }>
 			<IndexRoute component={ wrapped( PostList ) } />
-			<Route path="/posts/:postId" component={ wrapped( Post ) } />
+			<Route path="categories/:selectedCategory" component={ wrapped( PostList ) } />
+			<Route path="tags/:selectedTag" component={ wrapped( PostList ) } />
 		</Route>
 	</Router>
 ), document.getElementById( 'root' ) );

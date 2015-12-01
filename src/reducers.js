@@ -31,13 +31,19 @@ export const addPost = post => ( {
 } );
 
 export const fetchPosts = dispatch => {
-	fetch( `https://public-api.wordpress.com/rest/v1.1/sites/${ config.site }/posts/?fields=ID,attachments,title,content` )
+	const fields = [
+		'ID',
+		'featured_image',
+		'title',
+		'content',
+		'tags',
+		'date',
+		'categories'
+	].join( ',' );
+
+	fetch( `https://public-api.wordpress.com/rest/v1.1/sites/${ config.site }/posts/?fields=${ fields }&order=DESC` )
 		.then( response => response.json() )
 		.then( data => data.posts )
-		.then( posts => posts.map( post => ( {
-			...post,
-			featured_image: post.attachments[ Object.keys( post.attachments ).slice(-1) ].URL
-		} ) ) )
 		.then( posts => posts.forEach( post => dispatch( addPost( post ) ) ) )
 		.catch( console.log );
 };

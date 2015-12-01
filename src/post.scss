@@ -1,9 +1,68 @@
 .post {
 	text-align: center;
+	margin-bottom: 23*2px;
+	border-bottom: 1px solid lighten( black, 15% );
 
-	& img {
+	& .meta-block {
+		background-color: lighten( black, 5% );
+		margin-top: 23px;
+		margin-bottom: 23px;
+
+		& a {
+			text-decoration: none;
+			color: darken( white, 40% );
+
+			&:hover {
+				color: white;
+			}
+		}
+
+		& .title {
+			font-family: 'Georgia';
+			font-weight: normal;
+			color: white;
+			margin-bottom: 0;
+		}
+
+		& span {
+			& .category {
+				&:after {
+					content: ' - ';
+				}
+
+				&:last-child:after {
+					content: ' ';
+				}
+			}
+
+			& .tag {
+				margin-right: 6px;
+
+				&:before {
+					content: '#';
+				}
+			}
+		}
+	}
+
+	& .featured-image {
 		width: 100%;
 		height: auto;
 		object-fit: contain;
+
+		&:hover {
+			opacity: 0.72;
+		}
+	}
+
+	& .description {
+		width: 75%;
+		margin: auto;
+
+		line-height: 1.4;
+
+		& img {
+			display: none;
+		}
 	}
 }
